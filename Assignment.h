@@ -7,9 +7,16 @@ using namespace std;
 #define _ASSIGNMENT_H_
 
 class Assignment {
-	public:		
+	public:	
 		Assignment();
 		~Assignment();
+		void setAssignmentName(string);
+		string getAssignmentName();
+		void setComment(string);
+		string getComment();
+		void setGrade(double);
+		double getGrade();			
+		
 	private:
 		string assignmentName;
 		string comment;
