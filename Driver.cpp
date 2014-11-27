@@ -4,11 +4,17 @@ using namespace std;
 #include "Student.h"
 #include "Semester.h"
 
-int main(int argc, char *argv[]) {
 
+
+int main(int argc, char *argv[]) {
+	readCSV
 }
 
 
-public onQuit() {
+private onQuit() {
 	//probably lots of cleanup
+}
+
+private readCSV() {
+	
 }

@@ -7,13 +7,12 @@ using namespace std;
 #define _SEMESTER_H_
 
 class Semester {
-	public:
-		int year;
-		string semester;
-		vector<Course*> courses;
+	public:		
 		Course();
 		~Course();
 	private:
-	
+		int year;
+		string semester;
+		vector<Course*> courses;
 }
 #endif

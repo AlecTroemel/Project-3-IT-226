@@ -8,14 +8,16 @@ using namespace std;
 
 class Student {
 	public:
-		int studentId;
-		string name;
-		vector<Course> courses;
-		vector<Assignment*> assignments;
+		
 		Student();
 		~Student();
 	private:	
-		
+		string studentId;
+		string firstName;
+		string lastName;
+		double finalPercent;
+		string finalLeterGrade;		
+		vector<Assignment*> assignments;
 }
 
 #endif

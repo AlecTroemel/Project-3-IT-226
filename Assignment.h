@@ -7,14 +7,13 @@ using namespace std;
 #define _ASSIGNMENT_H_
 
 class Assignment {
-	public:
-		string assignmentName;
-		string comment;
-		double grade;
+	public:		
 		Assignment();
 		~Assignment();
 	private:
-	
+		string assignmentName;
+		string comment;
+		double grade;
 }
 
 #endif
