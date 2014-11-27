@@ -9,10 +9,13 @@ using namespace std;
 class Student {
 	public:
 		int studentId;
+		string name;
 		vector<Course> courses;
+		vector<Assignment*> assignments;
+		Student();
+		~Student();
+	private:	
 		
-	
-	private:
 }
 
 #endif
