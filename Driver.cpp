@@ -40,7 +40,7 @@ void addData() {
 		string line = "";
 		while(getline(myfile,line,'\n')) {
 			lines.push(line);
-			cout << "\n" << line << "\n";		
+			//cout << "\n" << line << "\n";		
 		}
 		
 
@@ -64,20 +64,65 @@ void addData() {
 		while(!lines.empty()) {
 			line = lines.front();
 			lines.pop();
-					
+			//cout << "\n" << line << "\n";
 			int size = columnName.size();
-			for(int i = 0; i <= size; i++) {
-				
+			//cout << size;
+			for(int i = 0; i < size; i++) {
 				//push front column to the back of the queue
 				string columnTitle = columnName.front();
 				columnName.pop();	
-				columnName.push(columnTitle);
+				columnName.push(columnTitle);			//put it in the back of the queue
+				//cout << "\n" << i << "\n" << line << "\n";		
+				//check to see if the next item is surounded by double quotes						
+				char delimiter;	
+				int index;
+				if(!line.substr(0,1).compare("\"") ) {		//check for " 		
+					delimiter = '"';	
+					index = line.find(delimiter, 1); 	//find the second double quote
+					
+					//handle inner quotes ""
+					while(!line.substr(index+1, 1).compare("\"")) {	
+						//find the matching ""  
+						index = line.find(delimiter,index+2);
+						index = index+1;				
+						index = line.find(delimiter,index+1);
+					}
+					//line.substr(0,2).compare("\"\"")
+					
+				} else {
+					delimiter = ',';
+					index = line.find(delimiter, 0); 	//find the next comma 
+				}
 				
-				//process the item according to its column				
+				//grab that column of the data based on the delimiter
+				string data;
+				if(index == -1) {				//its the last item in the row
+					data = line;	
+				}
+				else {
+					if(delimiter == '"') {
+						data = line.substr(1,index-1);	
+						line = line.substr(index+2);	//remove the quote and the comma
+					}
+					else {
+						data = line.substr(0,index);
+						line = line.substr(index+1);			
+					}
+					
+					
+				}
+				
+				//print out the column title and its data
+				//cout << "\n" << columnTitle << "\t" << data;
+				cout << data << "\n";
+				
+								
 			}	
 		}
 			
 		/*
+		
+		//cout << line.substr(0,2) << "\n";
 		//print out the items in the columnName Queue
 		while(!columnName.empty()) {
 			string temp = columnName.front();
