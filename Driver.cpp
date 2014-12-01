@@ -5,12 +5,14 @@
 #include <cstdlib>
 #include <locale>
 #include <sstream>
+#include <vector> 
 
 using namespace std;
 
-//#include "Course.h"
-//#include "Student.h"
-//#include "Semester.h"
+#include "Course.h"
+#include "Student.h"
+#include "Semester.h"
+
 enum parser_code {  FIRSTNAME,
 		    LASTNAME,
 		    FULLNAME,
@@ -21,6 +23,8 @@ enum parser_code {  FIRSTNAME,
 		    LETTER_GRADE,
 		    ERROR	};
 
+
+vector<Semester> semesters; 
 
 parser_code chooseCode(const string str) {
 	string temp = str;
@@ -60,16 +64,28 @@ parser_code chooseCode(const string str) {
 
 void addData() {
 	string fileName, semester, courseNumber;
-	int year ;
+	int year;
 
 	cout << "Enter fileName (include .cvs): ";
 	cin >> fileName;
-
+	
+	cout << "Enter year: ";
+	cin >> year;
+	
 	cout << "Enter Semester: ";
 	cin >> semester;
 
 	cout << "Enter Course Number: ";
 	cin >> courseNumber;
+
+	//create Semester and course
+	Semester temp;
+	temp.setYear(year);
+	temp.setSemester(semester);
+	Course* tempCourse = new Course(courseNumber);
+	temp.addCourse(tempCourse);
+	Semesters.push_back(temp);
+	
 
 	//read everything!!
 	string firstline = "";
