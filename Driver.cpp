@@ -300,8 +300,29 @@ int main(int argc, char *argv[]) {
 			addData();
 			cin.clear();
 		}
-		else if(choice == 'S' || choice == 's') 
+		else if(choice == 'S' || choice == 's'){
+			string studentID;			
+			cout<<"Enter student ID: " << endl;
+			cin >> studentID;
+			cout << endl;
+			
+			bool studentExists = false;
+			for(int i =0; i < students.size();i++){
+				if(!students.at(i).getID().compare(studentID))
+				{
+					//match
+					studentExists = true;
+				}		
+			}
+
+			if(studentExists)
+			string fileName;
+			cout<<"Enter name of file" <<endl;			
+			cin >> fileName;			 
+			saveDataForStudent(fileName);
 			saveDataForStudent();
+
+		}
 		else if(choice == 'E' || choice == 'e')
 			return 0; //end program
 		else if(choice == 't') 
