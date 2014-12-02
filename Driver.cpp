@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <locale>
 #include <sstream>
-
+#include <fstream>
 using namespace std;
 
 //#include "Course.h"
@@ -165,7 +165,7 @@ void addData() {
 					case LASTNAME:
 						cout << "last name";
 						break;
-					case FULLNAME:
+				case FULLNAME:
 						cout << "full name";
 						break;
 					case ID:
@@ -201,6 +201,20 @@ void addData() {
 }
 
 void saveDataForStudent() {
+	
+	std::ofstream outfile;
+	//opens a new .csv file	
+	outfile.open("savedData.csv",std::ofstream::out | std::ofstream::app);
+	//if the new file is open	
+	if(outfile.is_open()){
+		
+		
+
+		outfile<< "TEST" << endl;
+	}
+
+
+	outfile.close();
 	cout << "this has not been implemented yet\n";
 }
 
