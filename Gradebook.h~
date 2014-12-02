@@ -4,6 +4,7 @@
 #include <string>
 #include <queue>
 #include "Course.h"
+
 using namespace std;
 
 #ifndef _GRADEBOOK_H_
@@ -14,9 +15,9 @@ class Gradebook {
 	Gradebook();
 	Gradebook(string courseName,int year, string semester,queue<string> columnName);
 	~Gradebook();
+	string getAssignmentName(int index);
 	void addAssignment(double grade, string name);
 	void addAssignmentComment(string comment, int index);
-	
 	double getAssignmentGrade(string name);
 	string getAssignmentComment(string name);
 	void setTotal(double total);
@@ -24,8 +25,9 @@ class Gradebook {
 	void setLetterGrade(char lg);
 	char getLettergrade();
 	string toString();
+	string courseToString();
 	queue<string> getColumnNameQueue();
-	
+	int getAmountOfAssignments();
 	 
 	
 	private:

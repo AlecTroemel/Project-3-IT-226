@@ -24,7 +24,7 @@ enum parser_code {  FIRSTNAME,
 		    ERROR	};
 
 
-vector<Student> students; 
+vector<Student*> students; 
 
 parser_code chooseCode(const string str) {
 	string temp = str;
@@ -93,16 +93,13 @@ void addData() {
 	
 	if(myfile.good()) {	
 		int rows;
-		getline(myfile, firstline, '\n');	
-		cout << firstline<< "\n";
-		
+		getline(myfile, firstline, '\n');			
 		
 		// fill queue with lines 
 		queue<string> lines;
 		string line = "";
 		while(getline(myfile,line,'\n')) {
-			lines.push(line);
-			//cout << "\n" << line << "\n";		
+			lines.push(line);	
 		}
 		
 		//read the first line, pushing column title into a queue
@@ -123,18 +120,14 @@ void addData() {
 		
 		
 		//temp GradeBook which will be pointed to by the students
-		Gradebook tempGradebook(courseName, year, semester,columnName);		
+		Gradebook* tempGradebook = new Gradebook(courseName, year, semester,columnName);		
 		//temp classes that will be added 
-		Student tempStudent;
+		Student* tempStudent = new Student;
 		
 		//go through a line and process it 
 		while(!lines.empty()) {
 			line = lines.front();
 			lines.pop();
-			/*
-			if(lines.empty) {
-				cout << "the line is now empty";
-			}*/
 			
 			int size = columnName.size();
 			int gradeIndex = 0;	
@@ -187,60 +180,49 @@ void addData() {
 				
 				switch (code) {
 					case FIRSTNAME:
-						cout << "firstname";
-						tempStudent.setFirstName(data);
+						tempStudent->setFirstName(data);
 						break;
 					case LASTNAME:
-						cout << "lastname";
-						tempStudent.setLastName(data);
+						tempStudent->setLastName(data);
 						break;
 					case FULLNAME:
 					{
-						cout << "fullname";
 						//split up full name into lastname, firstname
 						int d = data.find(',', 1);
-						tempStudent.setLastName(data.substr(0,d));
-						tempStudent.setFirstName(data.substr(d+1));
+						tempStudent->setLastName(data.substr(0,d));
+						tempStudent->setFirstName(data.substr(d+1));
 						break;
 					}
 					case ID:
-						cout << "id";
-						tempStudent.setId(data);
+						tempStudent->setId(data);
 						break;
 					case ASSIGNMENT_GRADE:
 					{
-						cout << "assignment grade";
 						double i;
 						std::istringstream(data) >> i;
-						tempGradebook.addAssignment(i, columnTitle);
+						tempGradebook->addAssignment(i, columnTitle);
 						break;
 					}
 					case ASSIGNMENT_COMMENT:
-						cout << "assignment comment :" << data;
-						
-						tempGradebook.addAssignmentComment(data, gradeIndex);
+						tempGradebook->addAssignmentComment(data, gradeIndex);
 						gradeIndex++;
 						break;
 					case TOTAL:
-					{
-						cout << "total";
+					{	
 						double i;
 						std::istringstream(data) >> i;
-						tempGradebook.setTotal(i);
+						tempGradebook->setTotal(i);
 						break;
 					}
 					case LETTER_GRADE:
 					{
-						cout << "letter grade:" << data;
-						
-						tempGradebook.setLetterGrade(data[0]);
+						tempGradebook->setLetterGrade(data[0]);
 						break;
 					}
 					case ERROR:
 						cout << "error";
 						break;
-				}	
-				cout << "\n";									
+				}									
 			}
 			
 			//add student into student vector
@@ -248,44 +230,91 @@ void addData() {
 			//check to see if student already exists 
 			bool studentExists = false; 
 			for(int k = 0; k < students.size(); k++) {
-				if(!students.at(k).getId().compare(tempStudent.getId())) {	
+				if(!students.at(k)->getId().compare(tempStudent->getId())) {	
 					//a match has been found 
 					//add gradebook into student 
-					students.at(k).addGradebook(&tempGradebook);
+					students.at(k)->addGradebook(tempGradebook);
 					studentExists = true;
-					cout << students.at(k).toString();
+					cout << students.at(k)->toString();
 				}
 			}
 			
 			if(studentExists == false) {
 				//add gradebook to tempstudetn
-				tempStudent.addGradebook(&tempGradebook);	
+				tempStudent->addGradebook(tempGradebook);	
 				students.push_back(tempStudent);
-				cout << tempStudent.toString();
-			}									
+				cout << tempStudent->toString();
+			}
+			
+			//vector<Gradebook*>* studentGradebooks = students.at(0).getGradebooks();									
 		}
+		
+		cout << "file parsed and added successfully\n";	
 	}
 	else {
 		cout << "file does not exist\n";
 	}	
 }
 
-void saveDataForStudent() {
+void saveDataForStudent() {	
+	string studentID, filename;
+	int studentIndex = -1;
+	bool studentExists = false;
 	
-	std::ofstream outfile;
-	//opens a new .csv file	
-	outfile.open("savedData.csv",std::ofstream::out | std::ofstream::app);
-	//if the new file is open	
-	if(outfile.is_open()){
-		
-		
-
-		outfile<< "TEST" << endl;
+				
+	cout << "Enter student ID: \n";
+	cin >> studentID;
+	
+	for(int i =0; i < students.size();i++){
+		if(!students.at(i)->getId().compare(studentID))
+		{
+			//match
+			studentExists = true;
+			studentIndex = i;
+		}		
 	}
 
+	if(studentExists) {
+		cout << "Student ID found\n";
+		cout << "Enter name of file" <<endl;			
+		cin >> filename;			 
+		filename = filename + ".csv";		
+		//opens a new .csv file	
+		std::ofstream outfile;
+		outfile.open(filename.c_str(),std::ofstream::out | std::ofstream::app);
+		
+		//if the new file is open	
+		if(outfile.is_open()){
+		
+			//print out first line
+			string firstline = studentID + ",";
+			vector<Gradebook*>* studentGradebooks = students.at(studentIndex)->getGradebooks();	
+			//iterate through all gradebooks of the student
+			for(int j = 0; j < studentGradebooks->size(); j++) {
+								
+				//iterate through all the assignments of a given gradebook
+				for(int k = 0; k < studentGradebooks->at(j)->getAmountOfAssignments(); k++) {					
+					firstline = firstline + studentGradebooks->at(j)->courseToString();
+					firstline = firstline + studentGradebooks->at(j)->getAssignmentName(k) + ",";
+				}
+				firstline = firstline + studentGradebooks->at(j)->courseToString() + "Letter grade" + ",";	
+			}	
+			cout << firstline.length();
+			firstline.resize(firstline.length()-1);
+			outfile<<firstline << "\n";
 
-	outfile.close();
-	cout << "this has not been implemented yet\n";
+			//print out second line (the data)
+			string s = students.at(studentIndex)->toString();
+			s.resize(s.length()-1);
+			outfile << s;	
+		}
+		
+		cout << "student successfully saved to file " << filename;
+		outfile.close();	
+	}
+	else {
+		cout << "Stdent ID does not exist\n";
+	}		
 }
 
 int main(int argc, char *argv[]) {
@@ -300,8 +329,9 @@ int main(int argc, char *argv[]) {
 			addData();
 			cin.clear();
 		}
-		else if(choice == 'S' || choice == 's') 
+		else if(choice == 'S' || choice == 's'){	
 			saveDataForStudent();
+		}
 		else if(choice == 'E' || choice == 'e')
 			return 0; //end program
 		else if(choice == 't') 

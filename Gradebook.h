@@ -15,18 +15,19 @@ class Gradebook {
 	Gradebook();
 	Gradebook(string courseName,int year, string semester,queue<string> columnName);
 	~Gradebook();
+	string getAssignmentName(int index);
 	void addAssignment(double grade, string name);
 	void addAssignmentComment(string comment, int index);
-	
 	double getAssignmentGrade(string name);
 	string getAssignmentComment(string name);
 	void setTotal(double total);
 	double getTotal();
 	void setLetterGrade(char lg);
-	char getLettergrade();
+	char getLetterGrade();
 	string toString();
+	string courseToString();
 	queue<string> getColumnNameQueue();
-	
+	int getAmountOfAssignments();
 	 
 	
 	private:

@@ -22,6 +22,10 @@ Gradebook::~Gradebook() {
 	}
 }
 
+string Gradebook::getAssignmentName(int index) {
+	return assignments.at(index)->getAssignmentName();
+}
+
 void Gradebook::addAssignment(double grade,string name) {
 	Assignment* temp = new Assignment;
 	temp->setGrade(grade);
@@ -29,10 +33,7 @@ void Gradebook::addAssignment(double grade,string name) {
 	assignments.push_back(temp);
 }
 
-void Gradebook::addAssignmentComment(string comment, int index) {
-	cout << "comment: " << comment << "\n";
-	//this line is wrong!!
-	
+void Gradebook::addAssignmentComment(string comment, int index) {	
 	assignments.at(assignments.size()-1)->setComment(comment);
 }
 
@@ -64,7 +65,7 @@ void Gradebook::setLetterGrade(char lg) {
 	this->letterGrade = lg;
 }
 
-char Gradebook::getLettergrade() {
+char Gradebook::getLetterGrade() {
 	return letterGrade;
 }
 
@@ -74,15 +75,26 @@ string Gradebook::toString() {
 	//print out assignments grades and comments with , and " 
 	for(int i = 0; i < assignments.size(); i ++) {
 		ss <<  assignments[i]->getGrade() << ",";
-		if(assignments[i]->getComment().compare("")) {
-			ss << "\"" << assignments[i]->getComment() << "\","; 
-		}
 	}
-	ss << total << ",";
-	ss << letterGrade;	
+	ss << letterGrade << ",";	
 	return ss.str();
+}
+
+string Gradebook::courseToString() {
+	stringstream ss;
+	ss << course->getCourseName();
+	
+	//string temp = course->getSemester()
+	char c = course->getSemester()[0];
+	c = toupper(c);
+	ss << "-" << c << "-" << course->getYear() << "-";
+	return ss.str();	
 }
 
 queue<string> Gradebook::getColumnNameQueue() {
 	return course->getColumnNameQueue();
+}
+
+int Gradebook::getAmountOfAssignments() {
+	return assignments.size();
 }
