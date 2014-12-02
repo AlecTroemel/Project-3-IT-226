@@ -5,17 +5,13 @@
 #include <cstdlib>
 #include <locale>
 #include <sstream>
-<<<<<<< HEAD
 #include <fstream>
-=======
 #include <vector> 
 
->>>>>>> 8ebd92509d559f1e26d5cc130a29832a2c1588c7
 using namespace std;
 
 #include "Course.h"
 #include "Student.h"
-#include "Semester.h"
 
 enum parser_code {  FIRSTNAME,
 		    LASTNAME,
@@ -28,7 +24,7 @@ enum parser_code {  FIRSTNAME,
 		    ERROR	};
 
 
-vector<Semester> semesters; 
+vector<Student> students; 
 
 parser_code chooseCode(const string str) {
 	string temp = str;
@@ -67,7 +63,7 @@ parser_code chooseCode(const string str) {
 
 
 void addData() {
-	string fileName, semester, courseNumber;
+	string fileName, semester, courseName;
 	int year;
 
 	cout << "Enter fileName (include .cvs): ";
@@ -79,8 +75,8 @@ void addData() {
 	cout << "Enter Semester: ";
 	cin >> semester;
 
-	cout << "Enter Course Number: ";
-	cin >> courseNumber;
+	cout << "Enter Course Name: ";
+	cin >> courseName;
 
 	//create Semester and course
 	Semester temp;
@@ -110,7 +106,6 @@ void addData() {
 			//cout << "\n" << line << "\n";		
 		}
 		
-
 		//read the first line, pushing column title into a queue
 		queue<string> columnName;
 		int i = 0;	
@@ -127,12 +122,20 @@ void addData() {
 			i++;
 		}
 		
+		
+		//temp GradeBook which will be pointed to by the students
+		GradeBook tempGradebook(courseName, year, semester,columnName);
+		
 		//go through a line and process it 
 		while(!lines.empty()) {
 			line = lines.front();
 			lines.pop();
 			int size = columnName.size();
-
+			
+			//temp classes that will be added 
+			Student tempStudent;
+			
+			//go through single line (single student)
 			for(int i = 0; i < size; i++) {
 				//push front column to the back of the queue
 				string columnTitle = columnName.front();
@@ -178,41 +181,65 @@ void addData() {
 				//put the data where it needs to go!
 				parser_code code = chooseCode(columnTitle);
 				
+				int gradeIndex = 0;
 				switch (code) {
 					case FIRSTNAME:
-						cout << "first name";
+						tempStudent.setFirstName(data);
 						break;
 					case LASTNAME:
-						cout << "last name";
+						tempStudent.setLastName(data);
 						break;
-				case FULLNAME:
-						cout << "full name";
+					case FULLNAME:
+						//split up full name into lastname, firstname
+						int d = data.find(',', 1);
+						tempStudent.setLastName(data.substr(0,d));
+						tempStudent.setFirstName(data.substr(d+1));
 						break;
 					case ID:
-						cout << "id";
+						tempStudent.setID(data);
 						break;
 					case ASSIGNMENT_GRADE:
-						cout << "assignment grade";
+						tempGradebook.addAssignment(stod(data,NULL), columnTitle);
 						break;
 					case ASSIGNMENT_COMMENT:
-						cout << "assignment comment";
+						tempGradebook.addAssignmentComment(data, gradeIndex);
+						gradeIndex++;
 						break;
 					case TOTAL:
-						cout << "total";
+						tempGradebook.setTotal(stod(data,NULL));
 						break;
 					case LETTER_GRADE:
-						cout << "grade";
+						tempGradebook.setLetterGrade(stod(data,NULL));
 						break;
 					case ERROR:
 						cout << "error";
 						break;
 				}
-				cout << "\n";	
-				
-				
+				cout << "\n";				
 				//print out the column title and its data
 				//cout << data << "\n";												
-			}	
+			}
+			
+			//add student into student vector
+			
+			//check to see if student already exists 
+			bool studentExists = false; 
+			for(int k = 0; k < students.size(); k++) {
+				if(!students.at(k).getID().compare(tempStudent.getID()) {	
+					//a match has been found 
+					//add gradebook into student 
+					students.at(k).addGradebook(&tempGradebook);
+					studentExists = true;
+					cout << students.at(k).toString();
+				}
+			}
+			
+			if(studentExists == false) {
+				//add gradebook to tempstudetn
+				tempStudent.addGradebook(&tempGradebook);	
+				students.push_back(tempStudent);
+				cout << tempStudent.toString();
+			}									
 		}
 	}
 	else {

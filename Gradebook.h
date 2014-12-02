@@ -14,7 +14,9 @@ class Gradebook {
 	Gradebook();
 	Gradebook(string courseName,int year, string semester,Queue<string> columnName);
 	~Gradebook();
-	void addAssignment(double grade, string comment, string name);
+	void addAssignment(double grade, string name);
+	void addAssignmentComment(string comment, int index);
+	
 	double getAssignmentGrade(string name);
 	string getAssignmentComment(string name);
 	void setTotal(double total);

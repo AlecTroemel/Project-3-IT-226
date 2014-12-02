@@ -21,11 +21,15 @@ Gradebook::~Assignment() {
 	}
 }
 
-void Gradebook::addAssignment(double grade, string comment, string name) {
+void Gradebook::addAssignment(double grade,string name) {
 	Assignment temp;
-	temp.setComment(comment);
 	temp.setGrade(grade);
 	temp.setAssignmentName(name);
+	assignments.push_back(temp);
+}
+
+void Gradebook::addAssignmentComment(string comment, int index) {
+	assignments.at(index)->setComment(comment);
 }
 
 double Gradebook::getAssignmentGrade(string name) {
