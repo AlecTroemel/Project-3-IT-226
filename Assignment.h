@@ -21,6 +21,6 @@ class Assignment {
 		string assignmentName;
 		string comment;
 		double grade;
-}
+};
 
 #endif

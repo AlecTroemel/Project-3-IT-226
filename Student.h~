@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include "Gradebook.h"
+
+using namespace std;
+
+
+#ifndef _STUDENT_H_
+#define _STUDENT_H_
+
+class Student {
+	public:
+		string getId();
+		string getFirstName();
+		string getLastName();
+		void setId(string id);
+		void setFirstName(string firstName);
+		void setLastName(string lastName);
+		string toString();
+		void addGradebook(Gradebook* book);
+		vector<Gradebook*>* getGradebooks();
+		Student(string id, string firstName, string lastName);
+		Stu
+		~Student();
+	private:	
+		string studentId;
+		string firstName;
+		string lastName;	
+		vector<Gradebook*> gradebooks;
+};
+
+#endif

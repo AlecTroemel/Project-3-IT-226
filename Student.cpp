@@ -1,8 +1,16 @@
 #include <iostream>
 #include <string>
-using namespace std;
+#include <sstream>
 #include "Student.h"
 #include "Assignment.h"
+
+using namespace std;
+
+Student::Student() {
+	this->studentId = "";
+	this->firstName = "";
+	this->lastName = "";
+}
 
 Student::Student(string id, string firstName, string lastName)
 {
@@ -54,7 +62,7 @@ void Student::addGradebook(Gradebook* book)
 
 vector<Gradebook*>* Student::getGradebooks()
 {
-	return gradebooks;
+	return &gradebooks;
 }
 
 string Student::toString()

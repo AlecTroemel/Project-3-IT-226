@@ -3,7 +3,8 @@
 #include "Assignment.h"
 #include <string>
 #include <queue>
-#include <Course.h>
+#include "Course.h"
+
 using namespace std;
 
 #ifndef _GRADEBOOK_H_
@@ -12,7 +13,7 @@ using namespace std;
 class Gradebook {
 	public:
 	Gradebook();
-	Gradebook(string courseName,int year, string semester,Queue<string> columnName);
+	Gradebook(string courseName,int year, string semester,queue<string> columnName);
 	~Gradebook();
 	void addAssignment(double grade, string name);
 	void addAssignmentComment(string comment, int index);
@@ -32,5 +33,7 @@ class Gradebook {
 	Course *course;
 	double total;
 	char letterGrade;
-	vector<Assignments*> assignments;
-}
+	vector<Assignment*> assignments;
+};
+
+#endif

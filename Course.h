@@ -3,25 +3,26 @@
 
 #include <iostream>
 #include <vector>
-#include "Student.h"
+#include <queue>
+
 using namespace std;
 
 class Course {
 	public:		
 		Course();
-		Course(string courseName,int year, string semester,Queue<string> columnName);	
+		Course(string courseName,int year, string semester,queue<string> columnName);	
 		~Course();
 		
 		string getCourseName();
 		int getYear();
 		string getSemester();
-		Queue<string> getColumnNameQueue();
+		queue<string> getColumnNameQueue();
 		
 	private:
 	
 		string courseName;
-		string semester
+		string semester;
 		int year;		
-		Queue<string> columnName;
+		queue<string> columnName;
 };
 #endif

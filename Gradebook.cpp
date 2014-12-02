@@ -1,49 +1,53 @@
 #include "Gradebook.h"
+#include <sstream>
 using namespace std;
 
-Gradebook::Assignment() {
+Gradebook::Gradebook() {
 	this->total = 0;
 	this->letterGrade = ' ';
 	this->assignments;
 	this->course;
 }
 
-Gradebook::Gradebook(string courseName,int year, string semester,Queue<string> columnName) {
+Gradebook::Gradebook(string courseName,int year, string semester,queue<string> columnName) {
 	this->total = 0;
 	this->letterGrade = ' ';
 	this->assignments;
-	course = new Course(string courseName,int year, string semester,Queue<string> columnName);
+	course = new Course(courseName,year,semester,columnName);
 }
 
-Gradebook::~Assignment() {
-	for(int i = 0; i < assignment.size(); i ++) {
-		delete assignment[i];
+Gradebook::~Gradebook() {
+	for(int i = 0; i < assignments.size(); i ++) {
+		delete assignments[i];
 	}
 }
 
 void Gradebook::addAssignment(double grade,string name) {
-	Assignment temp;
-	temp.setGrade(grade);
-	temp.setAssignmentName(name);
+	Assignment* temp = new Assignment;
+	temp->setGrade(grade);
+	temp->setAssignmentName(name);
 	assignments.push_back(temp);
 }
 
 void Gradebook::addAssignmentComment(string comment, int index) {
-	assignments.at(index)->setComment(comment);
+	cout << "comment: " << comment << "\n";
+	//this line is wrong!!
+	
+	assignments.at(assignments.size()-1)->setComment(comment);
 }
 
 double Gradebook::getAssignmentGrade(string name) {
 	for(int i = 0; i < assignments.size(); i ++) {
-		if(!assignments[i].getAssignmentName().compare(name)) {
-			return assignments[i].getGrade();
+		if(!assignments[i]->getAssignmentName().compare(name)) {
+			return assignments[i]->getGrade();
 		}
 	}
 }
 
 string Gradebook::getAssignmentComment(string name) {
 	for(int i = 0; i < assignments.size(); i ++) {
-		if(!assignments[i].getAssignmentName().compare(name)) {
-			return assignments[i].getComment();
+		if(!assignments[i]->getAssignmentName().compare(name)) {
+			return assignments[i]->getComment();
 		}
 	}
 }
@@ -69,15 +73,13 @@ string Gradebook::toString() {
 	
 	//print out assignments grades and comments with , and " 
 	for(int i = 0; i < assignments.size(); i ++) {
-		ss <<  assignments[i].getGrade(); << ",";
-		if(assignments[i].getComment().compare("")) {
-			ss << "\"" << assignments[i].getComment() << "\","; 
+		ss <<  assignments[i]->getGrade() << ",";
+		if(assignments[i]->getComment().compare("")) {
+			ss << "\"" << assignments[i]->getComment() << "\","; 
 		}
 	}
-	
-	
 	ss << total << ",";
-	ss << letterGrade << ",";	
+	ss << letterGrade;	
 	return ss.str();
 }
 

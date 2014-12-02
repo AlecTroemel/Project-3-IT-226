@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
-#include "Assignment.h"
+#include <string>
+#include "Gradebook.h"
 
 using namespace std;
+
 
 #ifndef _STUDENT_H_
 #define _STUDENT_H_
@@ -19,6 +21,7 @@ class Student {
 		void addGradebook(Gradebook* book);
 		vector<Gradebook*>* getGradebooks();
 		Student(string id, string firstName, string lastName);
+		Student();
 		~Student();
 	private:	
 		string studentId;

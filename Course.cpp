@@ -14,14 +14,13 @@
 using namespace std;
 
 Course::Course(){
-	this->number = 0;
 	this->courseName = "";
 	this->semester = "";
 	this->year = 0;
 	this->columnName;
 }
 
-Course::Course(string courseName,int year, string semester,Queue<string> columnName) {
+Course::Course(string courseName,int year, string semester,queue<string> columnName) {
 	this->courseName = courseName;
 	this->year = year;
 	this->semester = semester;
@@ -43,6 +42,6 @@ string Course::getSemester() {
 	return this->semester;
 }
 
-Queue<string> Course::getColumnNameQueue() {
+queue<string> Course::getColumnNameQueue() {
 	return columnName;
 }

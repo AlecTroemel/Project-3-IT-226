@@ -1,9 +1,9 @@
 #include <sstream>
 #include <iostream>
-
+#include "Assignment.h"
 
 using namespace std;
-#include "Assignment.h"
+
 
 //default constructor, initiates to blank strings and 0
 Assignment::Assignment() {
@@ -16,11 +16,11 @@ Assignment::Assignment() {
 Assignment::~Assignment() {}
 
 void Assignment::setAssignmentName(string name) {
-	this->AssignmentName = name;
+	this->assignmentName = name;
 }
 
 string Assignment::getAssignmentName() {
-	return this->AssignmentName;
+	return this->assignmentName;
 }
 
 void Assignment::setComment(string comment) {
