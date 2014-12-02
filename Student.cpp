@@ -4,13 +4,12 @@ using namespace std;
 #include "Student.h"
 #include "Assignment.h"
 
-Student::Student(string id, string firstName, string lastName, double finalPercentage, char finalLetterGrade)
+Student::Student(string id, string firstName, string lastName)
 {
 	this->studentId = id;
 	this->firstName = firstName;
 	this->lastName = lastName;
-	this->finalPercentage = finalPercentage;
-	this->finalLetterGrade = finalLetterGrade;
+
 }
 
 Student::~Student()
@@ -33,16 +32,6 @@ string Student::getLastName()
 	return lastName;
 }
 
-double Student::getFinalPercentage()
-{
-	return finalPercentage;
-}
-
-char Student::getFinalLetterGrade()
-{
-	return finalLetterGrade;
-}
-
 void Student::setId(string id)
 {
 	this->studentId = id;
@@ -58,14 +47,14 @@ void Student::setLastName(string lastName)
 	this->lastName = lastName;
 }
 
-void Student::setFinalPercentage(double finalPercentage)
+void Student::addGradebook(Gradebook* book)
 {
-	this->finalPercentage = finalPercentage;
+	gradebooks.push_back(book);
 }
 
-void Student::setFinalLetterGrade(char finalLetterGrade)
+vector<Gradebook*>* Student::getGradebooks()
 {
-	this->finalLetterGrade = finalLetterGrade;
+	return gradebooks;
 }
 
 string Student::toString()
