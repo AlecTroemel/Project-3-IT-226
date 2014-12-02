@@ -59,5 +59,12 @@ vector<Gradebook*>* Student::getGradebooks()
 
 string Student::toString()
 {
-
+	stringstream ss; //allows read and write to string 
+	for (int i = 0; i < gradebooks.size(); i++) {
+		ss << firstName << ",";
+		ss << lastName << ",";
+		ss << studentId << ",";
+		ss << gradebooks[i]->toString();
+	}
+	return ss.str();
 }

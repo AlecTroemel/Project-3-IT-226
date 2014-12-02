@@ -9,15 +9,19 @@ using namespace std;
 class Course {
 	public:		
 		Course();
-		Course(string courseName);	
+		Course(string courseName,int year, string semester,Queue<string> columnName);	
 		~Course();
 		
-		void setCourseName(string str);
 		string getCourseName();
+		int getYear();
+		string getSemester();
+		Queue<string> getColumnNameQueue();
+		
 	private:
 	
 		string courseName;
-		int number;	
-		vector<Student*> students;
+		string semester
+		int year;		
+		Queue<string> columnName;
 };
 #endif

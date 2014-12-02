@@ -1,3 +1,10 @@
+/*
+	string courseName;
+	string semester
+	int year;		
+	Queue<string> columnName;
+*/
+
 #include "Course.h"
 #include "Student.h"
 #include <vector>
@@ -8,30 +15,34 @@ using namespace std;
 
 Course::Course(){
 	this->number = 0;
-	this->students;
-	this->courseName;
+	this->courseName = "";
+	this->semester = "";
+	this->year = 0;
+	this->columnName;
 }
 
-Course::Course(string courseName){
+Course::Course(string courseName,int year, string semester,Queue<string> columnName) {
 	this->courseName = courseName;
-	this->students;
-	this->courseName;
-
+	this->year = year;
+	this->semester = semester;
+	this->columnName = columnName;
 }
 
 Course::~Course(){
 }
 
-
-
-void Course::setCourseName(string str){
-
-	this->courseName = str;
-}
-
-
 string Course::getCourseName(){
-	
 	return this->courseName;
 }
 
+int Course::getYear() {
+	return this->year;
+}
+
+string Course::getSemester() {
+	return this->semester;
+}
+
+Queue<string> Course::getColumnNameQueue() {
+	return columnName;
+}
