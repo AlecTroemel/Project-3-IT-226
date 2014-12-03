@@ -233,9 +233,7 @@ void addData() {
 				//add gradebook to tempstudetn
 				tempStudent->addGradebook(tempGradebook);	
 				students.push_back(tempStudent);
-			}
-			
-			//vector<Gradebook*>* studentGradebooks = students.at(0).getGradebooks();									
+			}									
 		}
 		
 		cout << "file parsed and added successfully\n";	
@@ -321,9 +319,12 @@ int main(int argc, char *argv[]) {
 			saveDataForStudent();
 		}
 		else if(choice == 'E' || choice == 'e')
+			//delete student vector 
+			for(int i = 0; i < students.size(); i++) {
+				delete students[i];
+			}
+		
 			return 0; //end program
-		else if(choice == 't') 
-			parser_code temp = chooseCode("TEST STRING:");
 		else { 
 			cout << "Please enter a valid choice\n";
 		}

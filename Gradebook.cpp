@@ -20,6 +20,7 @@ Gradebook::~Gradebook() {
 	for(int i = 0; i < assignments.size(); i ++) {
 		delete assignments[i];
 	}
+	delete course;
 }
 
 string Gradebook::getAssignmentName(int index) {
