@@ -44,20 +44,20 @@ parser_code chooseCode(const string str) {
 	}
 	
 	//depending on what the string is, return the correct enum 
-	if (  temp.find("id") != -1) 					return ID;
-	if ( (temp.find("first") !=-1) && (temp.find("name") !=-1) ) 	return FIRSTNAME;
-	if ( (temp.find("last") !=-1) && (temp.find("name") !=-1) ) 	return LASTNAME;	
-	if (  temp.find("name") !=-1 ) 					return FULLNAME;
-	if (  temp.find("comment") !=-1) 				return ASSIGNMENT_COMMENT;
+	if (  temp.find("user id") != -1 || temp.find("student id") != -1)	return ID;
+	if ( (temp.find("first") !=-1) && (temp.find("name") !=-1) ) 		return FIRSTNAME;
+	if ( (temp.find("last") !=-1) && (temp.find("name") !=-1) ) 		return LASTNAME;	
+	if (  temp.find("name") !=-1 ) 						return FULLNAME;
+	if (  temp.find("comment") !=-1) 					return ASSIGNMENT_COMMENT;
 	if ( (temp.find("assignment") !=-1) || 
 	     (temp.find("paper") !=-1) || 
 	     (temp.find("exam") !=-1) || 
 	     (temp.find("project") !=-1) || 
-	     (temp.find("sprint") !=-1)) 				return ASSIGNMENT_GRADE;
-	if (  temp.find("total") !=-1) 					return TOTAL;
-	if (  temp.find("grade") !=-1) 					return LETTER_GRADE;   
-									
-									return ERROR;	
+	     (temp.find("sprint") !=-1)) 					return ASSIGNMENT_GRADE;
+	if (  temp.find("total") !=-1) 						return TOTAL;
+	if (  temp.find("grade") !=-1) 						return LETTER_GRADE; 
+	  
+										return ERROR;	
 }
 
 
@@ -69,15 +69,53 @@ void addData() {
 	cin >> fileName;
 	fileName = fileName + ".csv";
 	
-	cout << "Enter year: ";
-	cin >> year;
+	//make sure entered year is an nt
+	bool switcher = true;
+	while(switcher) {
+		cout << "Enter year: ";
+		string temp;
+		cin >> temp;
+		
+		bool isDigit = true;
+		std::string::const_iterator it = temp.begin();
+		while (it != temp.end()) {
+			if(!std::isdigit(*it)) {
+				isDigit = false;
+			}
+			it++;
+		}
+		
+		if(isDigit) {
+			stringstream ss;
+			ss << temp;
+			ss >> year;
+			switcher = false;
+		}
+		else {
+			cout << "not a valid number, enter again\n";
+		}
+	}
+		
 	
 	cout << "Enter Semester: ";
 	cin >> semester;
-
 	cout << "Enter Course Name: ";
 	cin >> courseName;
 	
+	
+	switcher = true;
+	while(switcher) {
+		cout << "Enter Course Name: ";
+		getline(cin,courseName);
+		
+		if (courseName.find(" ",0) != -1) {
+			cout << "please enter a name with no spaces\n";
+		}
+		else {
+			switcher = false;
+		}
+	}	
+	*/
 	//read everything!!
 	string firstline = "";
 	ifstream myfile(fileName.c_str()); //file stream
@@ -131,7 +169,8 @@ void addData() {
 				columnName.pop();	
 				columnName.push(columnTitle);			//put it in the back of the queue
 				
-				//check to see if the next item is surounded by double quotes						
+				//check to see if the next item is std::cin.ignore();
+				//surounded by double quotes						
 				char delimiter;	
 				int index;
 				if(!line.substr(0,1).compare("\"") ) {		//check for " 		
@@ -186,9 +225,6 @@ void addData() {
 						tempStudent->setFirstName(data.substr(d+1));
 						break;
 					}
-					case ID:
-						tempStudent->setId(data);
-						break;
 					case ASSIGNMENT_GRADE:
 					{
 						double i;
@@ -212,6 +248,9 @@ void addData() {
 						tempGradebook->setLetterGrade(data[0]);
 						break;
 					}
+					case ID:
+						tempStudent->setId(data);
+						break;
 					case ERROR:
 						cout << "error";
 						break;
@@ -226,8 +265,6 @@ void addData() {
 				if(!students.at(k)->getId().compare(tempStudent->getId())) {	
 					//a match has been found 
 					//add gradebook into student 
-					cout << "\nstudent exists, add another gradebook to it. id: " <<  tempStudent->getId() <<; 
-					
 					students.at(k)->addGradebook(tempGradebook);
 					studentExists = true;
 				}
@@ -313,7 +350,7 @@ int main(int argc, char *argv[]) {
 	while(true) {
 		cin.clear();
 		char choice;
-		cout << "\nA: Add data \nS: Save data for a student \nE: Exit\n";
+		cout << "\nA: Add data ('A' or 'a') \nS: Save data for a student ('S' or 's') \nE: Exit ('E' or 'e')\n";
 		cin >> choice;
 
 		if(choice == 'A' || choice == 'a') { 
