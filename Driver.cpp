@@ -65,8 +65,9 @@ void addData() {
 	string fileName, semester, courseName;
 	int year;
 
-	cout << "Enter fileName (include .cvs): ";
+	cout << "Enter fileName: ";
 	cin >> fileName;
+	fileName = fileName + ".csv";
 	
 	cout << "Enter year: ";
 	cin >> year;
@@ -113,10 +114,11 @@ void addData() {
 		//temp GradeBook which will be pointed to by the students
 		Gradebook* tempGradebook = new Gradebook(courseName, year, semester,columnName);		
 		//temp classes that will be added 
-		Student* tempStudent = new Student;
+		Student* tempStudent;
 		
 		//go through a line and process it 
 		while(!lines.empty()) {
+			tempStudent = new Student;
 			line = lines.front();
 			lines.pop();
 			
@@ -220,10 +222,12 @@ void addData() {
 			
 			//check to see if student already exists 
 			bool studentExists = false; 
-			for(int k = 0; k < students.size(); k++) {
+			for(int k = 0; k < students.size(); k++) {	
 				if(!students.at(k)->getId().compare(tempStudent->getId())) {	
 					//a match has been found 
 					//add gradebook into student 
+					cout << "\nstudent exists, add another gradebook to it. id: " <<  tempStudent->getId() << "\n"; 
+					
 					students.at(k)->addGradebook(tempGradebook);
 					studentExists = true;
 				}
@@ -234,8 +238,7 @@ void addData() {
 				tempStudent->addGradebook(tempGradebook);	
 				students.push_back(tempStudent);
 			}									
-		}
-		
+		}	
 		cout << "file parsed and added successfully\n";	
 	}
 	else {
@@ -277,6 +280,8 @@ void saveDataForStudent() {
 			string firstline = studentID + ",";
 			vector<Gradebook*>* studentGradebooks = students.at(studentIndex)->getGradebooks();	
 			//iterate through all gradebooks of the student
+			
+			cout << "\n" << studentGradebooks->size() << "\n";
 			for(int j = 0; j < studentGradebooks->size(); j++) {
 								
 				//iterate through all the assignments of a given gradebook
@@ -318,13 +323,14 @@ int main(int argc, char *argv[]) {
 		else if(choice == 'S' || choice == 's'){	
 			saveDataForStudent();
 		}
-		else if(choice == 'E' || choice == 'e')
+		else if(choice == 'E' || choice == 'e') {
 			//delete student vector 
-			for(int i = 0; i < students.size(); i++) {
-				delete students[i];
+			
+			while(!students.empty()) {
+				delete students.back(), students.pop_back();
 			}
-		
 			return 0; //end program
+		}
 		else { 
 			cout << "Please enter a valid choice\n";
 		}

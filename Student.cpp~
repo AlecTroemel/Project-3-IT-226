@@ -22,7 +22,11 @@ Student::Student(string id, string firstName, string lastName)
 
 Student::~Student()
 {
-
+/*
+	while(!gradebooks.empty()) {
+		delete gradebooks.back(), gradebooks.pop_back();
+	}
+	*/
 }
 
 string Student::getId()

@@ -17,9 +17,6 @@ Gradebook::Gradebook(string courseName,int year, string semester,queue<string> c
 }
 
 Gradebook::~Gradebook() {
-	for(int i = 0; i < assignments.size(); i ++) {
-		delete assignments[i];
-	}
 	delete course;
 }
 

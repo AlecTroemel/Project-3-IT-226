@@ -22,9 +22,6 @@ Student::Student(string id, string firstName, string lastName)
 
 Student::~Student()
 {
-	for(int i = 0; i < gradebooks.size(); i++) {
-		delete gradebooks[i];
-	}
 }
 
 string Student::getId()
