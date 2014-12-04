@@ -97,7 +97,7 @@ void addData() {
 	}
 		
 	
-	cout << "Enter Semester ('Fall' or 'Spring'): ";
+	cout << "Enter Semester ('Fall', 'Summer' or 'Spring'): ";
 	cin >> semester;
 	
 	cout << "Enter Course Name with no spaces(EX: 'IT226'): ";
