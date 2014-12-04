@@ -65,7 +65,7 @@ void addData() {
 	string fileName, semester, courseName;
 	int year;
 
-	cout << "Enter fileName: ";
+	cout << "Enter fileName(without .csv): ";
 	cin >> fileName;
 	fileName = fileName + ".csv";
 	
@@ -97,26 +97,12 @@ void addData() {
 	}
 		
 	
-	cout << "Enter Semester: ";
+	cout << "Enter Semester ('Fall' or 'Spring'): ";
 	cin >> semester;
 	
-	cout << "Enter Course Name: ";
+	cout << "Enter Course Name with no spaces(EX: 'IT226'): ";
 	cin >> courseName;
-	
-	/*
-	switcher = true;
-	while(switcher) {
-		cout << "Enter Course Name: ";
-		std::getline(cin,courseName);
-		
-		if (courseName.find(" ",0) != -1) {
-			cout << "please enter a name with no spaces\n";
-		}
-		else {
-			switcher = false;
-		}
-	}	
-	*/
+
 	//read everything!!
 	string firstline = "";
 	ifstream myfile(fileName.c_str()); //file stream

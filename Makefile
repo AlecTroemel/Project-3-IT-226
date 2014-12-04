@@ -1,5 +1,5 @@
 Driver: Driver.o
-	g++ -o Driver.exe Driver.o Student.o Gradebook.o Course.o Assignment.o
+	g++ -o Driver Driver.o Student.o Gradebook.o Course.o Assignment.o
 
 Driver.o: Student.o
 	g++ -c Driver.cpp
